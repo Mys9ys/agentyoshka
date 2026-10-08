@@ -1,0 +1,27 @@
+{
+  "name": "@agentyoshka/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push"
+  },
+  "dependencies": {
+    "@agentyoshka/shared": "*",
+    "@fastify/cors": "^11.0.1",
+    "@prisma/client": "^6.8.2",
+    "fastify": "^5.3.3",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "prisma": "^6.8.2",
+    "tsx": "^4.19.4",
+    "typescript": "~6.0.2"
+  }
+}

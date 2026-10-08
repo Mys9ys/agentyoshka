@@ -1,0 +1,10 @@
+---
+description: Контекст игры Агентёшка — сценарный pet-agent MVP
+alwaysApply: true
+---
+
+Проект: **Агентёшка** (`agentyoshka`). Читай `docs/PROJECT_BRIEF.md` перед крупными решениями.
+
+- Сценарий и календарь в `packages/content/` — не improvising open-world AI.
+- Стек: Vite React PWA + Fastify + Prisma + Postgres.
+- Имя продукта: Агентёшка; slug: agentyoshka.

@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  agent     Agent?
+}
+
+model Agent {
+  id             String       @id @default(cuid())
+  userId         String       @unique
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  displayName    String       @default("Агентёшка")
+  baseSkinId     String       @default("bear_cream")
+  level          Int          @default(1)
+  cultureXp      Int          @default(0)
+  trainingGrade  String       @default("G0")
+  cultureTrack   String       @default("neutral")
+  coins          Int          @default(0)
+  scenarioDayKey String       @default("monday")
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  dailyStates    DailyState[]
+}
+
+/// Одно действие сценария за календарный день (урок, сбор и т.д.)
+model DailyState {
+  id          String   @id @default(cuid())
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  dateKey     String
+  eventId     String
+  choiceKey   String?
+  completedAt DateTime @default(now())
+
+  @@unique([agentId, dateKey, eventId])
+  @@index([agentId, dateKey])
+}

@@ -1,0 +1,76 @@
+# Календарь MVP — один ивент на день недели (сценарий фиксированный)
+week:
+  monday:
+    id: mon_lesson
+    title: "Урок недели"
+    intro:
+      - speaker: agent
+        text: "Привет! Я Агентёшка. Сегодня — тихий понедельник. Выберем, чем меня кормить."
+    lessonChoice:
+      a: { track: pushkin, label: "Пушкин — лёгкость и рифма" }
+      b: { track: dostoevsky, label: "Достоевский — глубина и вопросы" }
+    reward: { cultureXp: 15, coins: 10 }
+
+  tuesday:
+    id: tue_practice
+    title: "Повторение"
+    intro:
+      - speaker: agent
+        text: "Вчерашний урок ещё в голове. Давай закрепим одной фразой."
+    reward: { cultureXp: 10, coins: 5 }
+
+  wednesday:
+    id: wed_release
+    title: "Мини-релиз"
+    intro:
+      - speaker: narrator
+        text: "Агентёшка дописал маленькую игру. Боты в ленте уже шепчут..."
+      - speaker: agent
+        text: "Собери монетки завтра — или поиграй у соседа сегодня!"
+    reward: { coins: 20 }
+
+  thursday:
+    id: thu_social
+    title: "Сарафан"
+    intro:
+      - speaker: narrator
+        text: "В радио: «Новая игра от чужого агента!»"
+    socialHint: "Посети двух агентов и сыграй в их релиз."
+    reward: { coins: 15 }
+
+  friday:
+    id: fri_skin
+    title: "Грейд скина"
+    intro:
+      - speaker: agent
+        text: "Если я хорошо учился — сегодня можно попробовать улучшить мой образ."
+    skinGradeGate: G1
+    reward: { cultureXp: 5 }
+
+  saturday:
+    id: sat_arcade
+    title: "Аркада"
+    intro:
+      - speaker: agent
+        text: "Суббота — день «Ну, погоди!»-стайл. Поймаешь монетку?"
+    minigame: catch_coins
+    reward: { coins: 25 }
+
+  sunday:
+    id: sun_collect
+    title: "Сбор дохода"
+    intro:
+      - speaker: agent
+        text: "Неделя позади. Забери то, что я «заработал» на релизе."
+    dailyClaim: true
+    reward: { coins: 30 }
+
+baseSkins:
+  - id: bear_cream
+    label: "Кремовый мишка"
+  - id: bear_amber
+    label: "Янтарный мишка"
+  - id: bear_slate
+    label: "Серый кодер"
+  - id: bear_rose
+    label: "Розовый оптимист"

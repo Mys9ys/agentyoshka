@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: agentyoshka-db
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: agentyoshka
+      POSTGRES_PASSWORD: agentyoshka
+      POSTGRES_DB: agentyoshka
+    volumes:
+      - agentyoshka_pg:/var/lib/postgresql/data
+
+volumes:
+  agentyoshka_pg:

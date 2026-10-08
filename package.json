@@ -1,0 +1,21 @@
+{
+  "name": "agentyoshka",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Агентёшка — сценарный pet-agent MVP (PWA + API)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:web",
+    "dev:web": "npm run dev --workspace=@agentyoshka/web",
+    "dev:api": "npm run dev --workspace=@agentyoshka/api",
+    "build": "npm run build --workspaces --if-present",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

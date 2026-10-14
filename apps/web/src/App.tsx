@@ -87,7 +87,7 @@ export default function App() {
     setScenarioWeekday(agentJson.scenarioWeekday ?? calJson.weekday);
     setToday(calJson);
     if (agentJson.source === 'fallback') {
-      setError('База офлайн — прогресс не сохранится. Запусти Postgres и migrate.');
+      setError('База офлайн — прогресс не сохранится. Проверь API и SQLite (apps/api/.env).');
     } else {
       setError(null);
     }

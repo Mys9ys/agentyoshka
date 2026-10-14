@@ -49,7 +49,7 @@ function buildTodayProgress(
 }
 
 export async function demoRoutes(app: FastifyInstance) {
-  app.get('/demo/agent', async (): Promise<{
+  app.get('/demo/agent', async (req): Promise<{
     agent: AgentProfile;
     coins: number;
     source: string;
@@ -165,7 +165,7 @@ export async function demoRoutes(app: FastifyInstance) {
     } catch (err) {
       req.log.error(err);
       return reply.status(503).send({
-        error: 'База недоступна. Запусти Postgres (npm run db:up) и prisma migrate.',
+        error: 'База недоступна. Проверь DATABASE_URL (SQLite) и prisma db push.',
       });
     }
   });
@@ -250,7 +250,7 @@ export async function demoRoutes(app: FastifyInstance) {
       } catch (err) {
         req.log.error(err);
         return reply.status(503).send({
-          error: 'База недоступна. Запусти Postgres и migrate.',
+          error: 'База недоступна. Проверь DATABASE_URL (SQLite) и prisma db push.',
         });
       }
     },

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { AgentProfile, TechBranchView, VoiceProfile } from '@agentyoshka/shared';
 import { VoiceProfileCard } from './VoiceProfileCard';
-import { apiUrl } from '../lib/api';
+import { apiFetch } from '../lib/api';
 import { CoinPill, Sheet, btnGhost } from '../design-system/ui';
 import { AgentAvatar } from './AgentAvatar';
 import { TechTreeView } from './TechTreeView';
@@ -42,7 +42,7 @@ export function BotProfilePage({ open, onClose, onAgentChange }: BotProfilePageP
     if (!silent) setLoading(true);
     setError(null);
     try {
-      const res = await fetch(apiUrl('/demo/profile'));
+      const res = await apiFetch('/demo/profile');
       if (!res.ok) throw new Error('Не удалось загрузить профиль');
       const json = (await res.json()) as ProfilePayload;
       setData(json);
@@ -67,7 +67,7 @@ export function BotProfilePage({ open, onClose, onAgentChange }: BotProfilePageP
     setEquipBusy(skinId);
     setError(null);
     try {
-      const res = await fetch(apiUrl('/demo/shop/equip'), {
+      const res = await apiFetch('/demo/shop/equip', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ skinId }),

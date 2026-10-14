@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AgentProfile, ProductionRunView, ProductionStateResponse } from '@agentyoshka/shared';
 import { btnPrimary, btnSecondary } from '../design-system/ui';
-import { apiUrl } from '../lib/api';
+import { apiFetch } from '../lib/api';
 
 type ProductionPanelProps = {
   onCoinsChange: (coins: number, agent?: AgentProfile) => void;
@@ -21,7 +21,7 @@ export function ProductionPanel({ onCoinsChange, embedded = false }: ProductionP
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch(apiUrl('/demo/production'));
+      const res = await apiFetch('/demo/production');
       const json = (await res.json()) as ProductionStateResponse;
       if (!json.ok) {
         setError(json.error ?? 'Не удалось загрузить пул');
@@ -48,7 +48,7 @@ export function ProductionPanel({ onCoinsChange, embedded = false }: ProductionP
   async function speedup(hours = 1) {
     setSpeeding(true);
     try {
-      const res = await fetch(apiUrl('/demo/production/speedup'), {
+      const res = await apiFetch('/demo/production/speedup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ hours }),
@@ -76,7 +76,7 @@ export function ProductionPanel({ onCoinsChange, embedded = false }: ProductionP
   async function watchAd() {
     setAdBusy(true);
     try {
-      const res = await fetch(apiUrl('/demo/ads/reward'), {
+      const res = await apiFetch('/demo/ads/reward', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ adId: 'ad_double_collect' }),
@@ -104,7 +104,7 @@ export function ProductionPanel({ onCoinsChange, embedded = false }: ProductionP
   async function collect(runId?: string) {
     setCollecting(runId ?? 'all');
     try {
-      const res = await fetch(apiUrl('/demo/production/collect'), {
+      const res = await apiFetch('/demo/production/collect', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(runId ? { runId } : {}),

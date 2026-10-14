@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { loadCalendar } from '../lib/calendar.js';
 import { toAgentProfile } from '../lib/agent-map.js';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { prisma } from '../lib/prisma.js';
 import { getShopItem, loadShop } from '../lib/shop.js';
 import { buildVoiceProfile } from '../lib/personality.js';
@@ -12,7 +12,7 @@ const STARTER_SKIN = 'bear_cream';
 export async function profileRoutes(app: FastifyInstance) {
   app.get('/demo/profile', async (req, reply) => {
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const calendar = loadCalendar();
       const purchases = await prisma.agentPurchase.findMany({
         where: { agentId: agent.id },

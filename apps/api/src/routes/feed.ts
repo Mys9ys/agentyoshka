@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { toAgentProfile } from '../lib/agent-map.js';
 import { dateKeyFromDate } from '../lib/day-config.js';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { findRelease, loadFeed } from '../lib/feed.js';
 import { MINIGAME_MIN_SCORE } from '../lib/minigames-catalog.js';
 import { applyDriftToAgent, driftForMinigame } from '../lib/personality.js';
@@ -10,7 +10,7 @@ import { prisma } from '../lib/prisma.js';
 export async function feedRoutes(app: FastifyInstance) {
   app.get('/demo/feed', async (req, reply) => {
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const feed = loadFeed();
       const dateKey = dateKeyFromDate();
       const visits = await prisma.dailyState.count({
@@ -89,7 +89,7 @@ export async function feedRoutes(app: FastifyInstance) {
     }
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const feed = loadFeed();
       const dateKey = dateKeyFromDate();
 

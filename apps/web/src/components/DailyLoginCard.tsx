@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AgentProfile, DailyLoginStateResponse } from '@agentyoshka/shared';
 import { ArtIcon, btnPrimary } from '../design-system/ui';
-import { apiUrl } from '../lib/api';
+import { apiFetch } from '../lib/api';
 
 type Props = {
   onClaimed: (coins: number, agent?: AgentProfile) => void;
@@ -12,7 +12,7 @@ export function DailyLoginCard({ onClaimed }: Props) {
   const [claiming, setClaiming] = useState(false);
 
   const load = useCallback(async () => {
-    const res = await fetch(apiUrl('/demo/daily-login'));
+    const res = await apiFetch('/demo/daily-login');
     const json = (await res.json()) as DailyLoginStateResponse;
     if (json.ok) setData(json);
   }, []);
@@ -24,7 +24,7 @@ export function DailyLoginCard({ onClaimed }: Props) {
   async function claim() {
     setClaiming(true);
     try {
-      const res = await fetch(apiUrl('/demo/daily-login/claim'), { method: 'POST' });
+      const res = await apiFetch('/demo/daily-login/claim', { method: 'POST' });
       const json = (await res.json()) as DailyLoginStateResponse & {
         agent?: AgentProfile;
         coins?: number;

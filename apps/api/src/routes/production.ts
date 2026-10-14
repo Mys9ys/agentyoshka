@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import { toAgentProfile } from '../lib/agent-map.js';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { prisma } from '../lib/prisma.js';
 import type { Agent } from '@prisma/client';
 import {
@@ -62,7 +62,7 @@ function runToView(
 export async function productionRoutes(app: FastifyInstance) {
   app.get('/demo/production', async (req, reply) => {
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const purchases = await prisma.agentPurchase.findMany({
         where: { agentId: agent.id },
         select: { itemId: true },
@@ -94,7 +94,7 @@ export async function productionRoutes(app: FastifyInstance) {
     const runId = req.body?.runId?.trim();
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const purchases = await prisma.agentPurchase.findMany({
         where: { agentId: agent.id },
         select: { itemId: true },
@@ -170,7 +170,7 @@ export async function productionRoutes(app: FastifyInstance) {
     const dateKey = dateKeyFromDate();
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       if (agent.coins < cost) {
         return reply.status(400).send({
           ok: false,

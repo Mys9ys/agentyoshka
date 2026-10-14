@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { toAgentProfile } from '../lib/agent-map.js';
 import { dateKeyFromDate } from '../lib/day-config.js';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { grantHardwareDrop } from '../lib/machine.js';
 import { prisma } from '../lib/prisma.js';
 import {
@@ -23,7 +23,7 @@ function yesterdayKey(dateKey: string): string {
 export async function dailyLoginRoutes(app: FastifyInstance) {
   app.get('/demo/daily-login', async (req, reply) => {
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const dateKey = dateKeyFromDate();
       const claimedToday = agent.lastLoginClaimDateKey === dateKey;
       const table = loginRewardTable();
@@ -64,7 +64,7 @@ export async function dailyLoginRoutes(app: FastifyInstance) {
 
   app.post('/demo/daily-login/claim', async (req, reply) => {
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const dateKey = dateKeyFromDate();
 
       if (agent.lastLoginClaimDateKey === dateKey) {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { apiUrl } from '../lib/api';
+import { apiFetch } from '../lib/api';
 import { Sheet } from '../design-system/ui';
 
 type HowtoItem = { title: string; body: string };
@@ -35,7 +35,7 @@ export function HelpPanel({ open, onClose }: Props) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(apiUrl('/demo/howto'));
+      const res = await apiFetch('/demo/howto');
       const json = (await res.json()) as HowtoPayload;
       if (!json.ok || !json.tabs?.length) {
         setError(json.error ?? 'Гайд пустой');

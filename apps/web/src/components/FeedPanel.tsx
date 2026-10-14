@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AgentProfile } from '@agentyoshka/shared';
-import { apiUrl } from '../lib/api';
+import { apiFetch } from '../lib/api';
 import { CatchCoinsGame } from '../minigames/catch-coins/CatchCoinsGame';
 import { MemoryPairsGame } from '../minigames/memory-pairs/MemoryPairsGame';
 import { SnakeMiniGame } from '../minigames/snake-mini/SnakeMiniGame';
@@ -56,7 +56,7 @@ export function FeedPanel({ onReward }: Props) {
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch(apiUrl('/demo/feed'));
+      const res = await apiFetch('/demo/feed');
       const json = (await res.json()) as FeedPayload;
       if (!json.ok) {
         setError(json.error ?? 'Лента недоступна');
@@ -77,7 +77,7 @@ export function FeedPanel({ onReward }: Props) {
     setSaving(true);
     setActive(null);
     try {
-      const res = await fetch(apiUrl('/demo/feed/play'), {
+      const res = await apiFetch('/demo/feed/play', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ releaseId, score, won: score > 0 }),

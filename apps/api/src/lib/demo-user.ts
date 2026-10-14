@@ -13,6 +13,7 @@ export async function getOrCreateDemoUser() {
     user = await prisma.user.create({
       data: {
         email: DEMO_EMAIL,
+        isGuest: true,
         agent: {
           create: {
             displayName: 'Агентёшка',

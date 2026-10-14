@@ -2,6 +2,7 @@ import cors from '@fastify/cors';
 import Fastify from 'fastify';
 import { loadCalendar, weekdayFromDate } from './lib/calendar.js';
 import { agentReplyRoutes } from './routes/agent-reply.js';
+import { authRoutes } from './routes/auth.js';
 import { dailyLoginRoutes } from './routes/daily-login.js';
 import { feedRoutes } from './routes/feed.js';
 import { howtoRoutes } from './routes/howto.js';
@@ -34,6 +35,7 @@ app.get('/skins', async () => {
   return { baseSkins: calendar.baseSkins };
 });
 
+await authRoutes(app);
 await demoRoutes(app);
 await agentReplyRoutes(app);
 await shopRoutes(app);

@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { buildMinigamesList, catalogStats } from '../lib/minigames-catalog.js';
 import { computeMachineStats, machineComponentsView } from '../lib/machine.js';
 import { prisma } from '../lib/prisma.js';
@@ -15,7 +15,7 @@ const tickPath = join(here, '../../../../packages/content/onboarding-tick.yaml')
 export async function machineRoutes(app: FastifyInstance) {
   app.get('/demo/machine', async (req, reply) => {
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const purchases = await prisma.agentPurchase.findMany({
         where: { agentId: agent.id },
         select: { itemId: true },

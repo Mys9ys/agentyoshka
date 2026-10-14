@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { toAgentProfile } from '../lib/agent-map.js';
 import { trainingGradeForXp } from '../lib/day-config.js';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { prisma } from '../lib/prisma.js';
 import { getShopItem, gradeAtLeast, loadShop } from '../lib/shop.js';
 import { invalidateDayIntroReply } from '../lib/agent-reply.js';
@@ -13,7 +13,7 @@ const STARTER_SKIN = 'bear_cream';
 export async function shopRoutes(app: FastifyInstance) {
   app.get('/demo/shop', async (req, reply) => {
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const purchases = await prisma.agentPurchase.findMany({
         where: { agentId: agent.id },
         select: { itemId: true },
@@ -44,7 +44,7 @@ export async function shopRoutes(app: FastifyInstance) {
     }
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
 
       const purchases = await prisma.agentPurchase.findMany({
         where: { agentId: agent.id },
@@ -137,7 +137,7 @@ export async function shopRoutes(app: FastifyInstance) {
     }
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
 
       if (skinId === STARTER_SKIN) {
         const updated = await prisma.agent.update({

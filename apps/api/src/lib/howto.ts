@@ -29,7 +29,8 @@ export type HowtoFile = {
 let cached: HowtoFile | null = null;
 
 export function loadHowto(): HowtoFile {
-  if (!cached) {
+  // Без долгого кэша в dev — гайд правим часто
+  if (!cached || process.env.NODE_ENV !== 'production') {
     cached = YAML.parse(readFileSync(howtoPath, 'utf8')) as HowtoFile;
   }
   return cached;

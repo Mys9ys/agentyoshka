@@ -5,7 +5,7 @@ import {
   maxReplyRegenerations,
   produceAgentReply,
 } from '../lib/agent-reply.js';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { buildVoiceProfile } from '../lib/personality.js';
 import { prisma } from '../lib/prisma.js';
 
@@ -19,7 +19,7 @@ export async function agentReplyRoutes(app: FastifyInstance) {
     const regenerate = Boolean(req.body?.regenerate);
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const weekday = weekdayFromDate();
       const day = getDayConfig(weekday);
       const dateKey = dateKeyFromDate();

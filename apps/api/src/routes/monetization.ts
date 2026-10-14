@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { toAgentProfile } from '../lib/agent-map.js';
 import { dateKeyFromDate } from '../lib/day-config.js';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { prisma } from '../lib/prisma.js';
 import { loadTickConfig } from '../lib/tick.js';
 
@@ -9,7 +9,7 @@ import { loadTickConfig } from '../lib/tick.js';
 export async function monetizationRoutes(app: FastifyInstance) {
   app.get('/demo/monetization', async (req, reply) => {
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const cfg = loadTickConfig().monetizationPlanned;
       const dateKey = dateKeyFromDate();
       const adRows = await prisma.dailyState.findMany({
@@ -57,7 +57,7 @@ export async function monetizationRoutes(app: FastifyInstance) {
     const dateKey = dateKeyFromDate();
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const used = await prisma.dailyState.count({
         where: {
           agentId: agent.id,
@@ -117,7 +117,7 @@ export async function monetizationRoutes(app: FastifyInstance) {
     const coins = packId === 'coins_medium' ? 200 : 80;
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const dateKey = dateKeyFromDate();
       const updated = await prisma.$transaction(async (tx) => {
         await tx.dailyState.create({

@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
 import { toAgentProfile } from '../lib/agent-map.js';
 import { dateKeyFromDate } from '../lib/day-config.js';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { computeMachineStats } from '../lib/machine.js';
 import {
   buildMinigamesList,
@@ -16,7 +16,7 @@ import { machineMeetsRequirement } from '../lib/machine.js';
 export async function minigamesRoutes(app: FastifyInstance) {
   app.get('/demo/minigames', async (req, reply) => {
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
       const purchases = await prisma.agentPurchase.findMany({
         where: { agentId: agent.id },
         select: { itemId: true },
@@ -72,7 +72,7 @@ export async function minigamesRoutes(app: FastifyInstance) {
       }
 
       try {
-        const { agent } = await getOrCreateDemoUser();
+        const { agent } = await getRequestAgent(req);
         const purchases = await prisma.agentPurchase.findMany({
           where: { agentId: agent.id },
           select: { itemId: true },

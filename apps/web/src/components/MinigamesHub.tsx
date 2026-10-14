@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AgentProfile, MinigameCatalogEntry } from '@agentyoshka/shared';
-import { apiUrl } from '../lib/api';
+import { apiFetch } from '../lib/api';
 import { CatchCoinsGame } from '../minigames/catch-coins/CatchCoinsGame';
 import { MemoryPairsGame } from '../minigames/memory-pairs/MemoryPairsGame';
 import { SnakeMiniGame } from '../minigames/snake-mini/SnakeMiniGame';
@@ -25,7 +25,7 @@ export function MinigamesHub({ onReward, embedded = false }: Props) {
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch(apiUrl('/demo/minigames'));
+      const res = await apiFetch('/demo/minigames');
       const json = (await res.json()) as {
         ok?: boolean;
         playsLeft?: number;
@@ -56,7 +56,7 @@ export function MinigamesHub({ onReward, embedded = false }: Props) {
     setSaving(true);
     setActive(null);
     try {
-      const res = await fetch(apiUrl('/demo/minigame-play'), {
+      const res = await apiFetch('/demo/minigame-play', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ minigameId, score }),

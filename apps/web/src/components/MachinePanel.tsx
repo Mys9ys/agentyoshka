@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { MachineStateResponse, MinigameCatalogEntry } from '@agentyoshka/shared';
 import { Sheet } from '../design-system/ui';
-import { apiUrl } from '../lib/api';
+import { apiFetch } from '../lib/api';
 
 type Props = {
   open: boolean;
@@ -41,7 +41,7 @@ export function MachinePanel({ open, onClose }: Props) {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(apiUrl('/demo/machine'));
+      const res = await apiFetch('/demo/machine');
       const json = (await res.json()) as MachineStateResponse;
       if (json.ok) setData(json);
     } finally {

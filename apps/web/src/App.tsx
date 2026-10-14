@@ -5,9 +5,10 @@ import type {
   DemoAgentResponse,
   LessonChoiceKey,
 } from '@agentyoshka/shared';
-import { apiUrl } from './lib/api';
+import { apiFetch, apiUrl, ensureGuestSession } from './lib/api';
 import { ART, ArtIcon, btnPrimary, btnSecondary, CoinPill, Sheet } from './design-system/ui';
 import { AgentAvatar, type BearPose } from './components/AgentAvatar';
+import { AuthPanel } from './components/AuthPanel';
 import { BotProfilePage } from './components/BotProfilePage';
 import { DailyLoginCard } from './components/DailyLoginCard';
 import { FeedPanel } from './components/FeedPanel';
@@ -59,12 +60,19 @@ export default function App() {
   const [productionTick, setProductionTick] = useState(0);
   const [machineOpen, setMachineOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [authInfo, setAuthInfo] = useState<{ isGuest: boolean; handle: string | null }>({
+    isGuest: true,
+    handle: null,
+  });
   const [screen, setScreen] = useState<'home' | 'pool' | 'arcade' | 'feed'>('home');
 
   const loadData = useCallback(async () => {
+    const session = await ensureGuestSession();
+    setAuthInfo({ isGuest: session.isGuest, handle: session.handle });
     const [agentRes, calRes] = await Promise.all([
-      fetch(apiUrl('/demo/agent')),
-      fetch(apiUrl('/calendar/today')),
+      apiFetch('/demo/agent'),
+      apiFetch('/calendar/today'),
     ]);
     if (!agentRes.ok || !calRes.ok) {
       throw new Error('API недоступен');
@@ -113,7 +121,7 @@ export default function App() {
   const fetchAgentReply = useCallback(async (regenerate = false) => {
     setReplyLoading(true);
     try {
-      const res = await fetch(apiUrl('/demo/agent-reply'), {
+      const res = await apiFetch('/demo/agent-reply', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ slot: 'day_intro', regenerate }),
@@ -140,7 +148,7 @@ export default function App() {
     setSubmitting(choice);
     setToast(null);
     try {
-      const res = await fetch(apiUrl('/demo/lesson-choice'), {
+      const res = await apiFetch('/demo/lesson-choice', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ choice }),
@@ -178,7 +186,7 @@ export default function App() {
     setDailyCompleting(true);
     setToast(null);
     try {
-      const res = await fetch(apiUrl('/demo/daily-complete'), { method: 'POST' });
+      const res = await apiFetch('/demo/daily-complete', { method: 'POST' });
       const json = (await res.json()) as {
         error?: string;
         agent?: AgentProfile;
@@ -208,7 +216,7 @@ export default function App() {
     setMinigameSaving(true);
     setToast(null);
     try {
-      const res = await fetch(apiUrl('/demo/minigame-complete'), {
+      const res = await apiFetch('/demo/minigame-complete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ minigameId, score }),
@@ -310,6 +318,15 @@ export default function App() {
                 Агентёшка
               </h1>
               <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setAuthOpen(true)}
+                  className="rounded-full border border-line bg-paper px-2.5 py-2 text-xs font-bold text-ink shadow-soft active:scale-[0.98]"
+                  aria-label="Аккаунт"
+                  title="Аккаунт"
+                >
+                  {authInfo.isGuest ? 'Гость' : `@${authInfo.handle}`}
+                </button>
                 <button
                   type="button"
                   onClick={() => setHelpOpen(true)}
@@ -547,6 +564,19 @@ export default function App() {
       <MachinePanel open={machineOpen} onClose={() => setMachineOpen(false)} />
 
       <HelpPanel open={helpOpen} onClose={() => setHelpOpen(false)} />
+
+      <AuthPanel
+        open={authOpen}
+        onClose={() => setAuthOpen(false)}
+        auth={authInfo}
+        onAuthed={({ agent: a, coins: c, auth }) => {
+          setAgent(a);
+          setCoins(c);
+          setAuthInfo(auth);
+          setProductionTick((n) => n + 1);
+          void loadData();
+        }}
+      />
 
       <ShopPanel
         open={shopOpen}

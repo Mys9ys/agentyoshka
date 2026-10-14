@@ -4,7 +4,7 @@ import { weekdayFromDate } from '../lib/calendar.js';
 import { dateKeyFromDate, getDayConfig } from '../lib/day-config.js';
 import { toAgentProfile } from '../lib/agent-map.js';
 import { completeDailyEvent } from '../lib/daily-action.js';
-import { getOrCreateDemoUser } from '../lib/demo-user.js';
+import { getRequestAgent } from '../lib/auth.js';
 import { prisma } from '../lib/prisma.js';
 import { invalidateDayIntroReply } from '../lib/agent-reply.js';
 import {
@@ -62,7 +62,7 @@ export async function demoRoutes(app: FastifyInstance) {
     const eventId = dayConfig.id ?? null;
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
 
       let daily = null;
       if (eventId) {
@@ -115,7 +115,7 @@ export async function demoRoutes(app: FastifyInstance) {
     }
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
 
       const existing = await prisma.dailyState.findUnique({
         where: {
@@ -206,7 +206,7 @@ export async function demoRoutes(app: FastifyInstance) {
       }
 
       try {
-        const { agent } = await getOrCreateDemoUser();
+        const { agent } = await getRequestAgent(req);
 
         const existing = await prisma.dailyState.findUnique({
           where: {
@@ -273,7 +273,7 @@ export async function demoRoutes(app: FastifyInstance) {
     }
 
     try {
-      const { agent } = await getOrCreateDemoUser();
+      const { agent } = await getRequestAgent(req);
 
       const existing = await prisma.dailyState.findUnique({
         where: {

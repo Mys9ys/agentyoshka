@@ -10,10 +10,27 @@ datasource db {
 }
 
 model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  /// Ник для входа (null = гость без пароля)
+  handle       String?   @unique
+  passwordHash String?
+  isGuest      Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  agent        Agent?
+  sessions     Session[]
+}
+
+/// Opaque Bearer-токен. Хранится на клиенте в localStorage.
+model Session {
   id        String   @id @default(cuid())
-  email     String   @unique
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
   createdAt DateTime @default(now())
-  agent     Agent?
+
+  @@index([userId])
 }
 
 model Agent {

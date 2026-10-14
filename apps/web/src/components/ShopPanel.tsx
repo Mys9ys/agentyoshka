@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { AgentProfile, ShopCatalogResponse, TechBranchView } from '@agentyoshka/shared';
-import { apiUrl } from '../lib/api';
+import { apiFetch } from '../lib/api';
 import { CoinPill, Sheet } from '../design-system/ui';
 import { TechTreeView } from './TechTreeView';
 
@@ -21,7 +21,7 @@ export function ShopPanel({ open, onClose, onUpdated }: ShopPanelProps) {
     setLoading(true);
     setMessage(null);
     try {
-      const res = await fetch(apiUrl('/demo/shop'));
+      const res = await apiFetch('/demo/shop');
       if (!res.ok) throw new Error('Магазин недоступен');
       const json = (await res.json()) as ShopCatalogResponse;
       setBranches(json.techBranches);
@@ -41,7 +41,7 @@ export function ShopPanel({ open, onClose, onUpdated }: ShopPanelProps) {
     setBusyId(itemId);
     setMessage(null);
     try {
-      const res = await fetch(apiUrl('/demo/shop/purchase'), {
+      const res = await apiFetch('/demo/shop/purchase', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ itemId }),
@@ -72,7 +72,7 @@ export function ShopPanel({ open, onClose, onUpdated }: ShopPanelProps) {
     setBusyId(`equip:${skinId}`);
     setMessage(null);
     try {
-      const res = await fetch(apiUrl('/demo/shop/equip'), {
+      const res = await apiFetch('/demo/shop/equip', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ skinId }),

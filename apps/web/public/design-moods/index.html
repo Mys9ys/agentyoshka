@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Агентёшка — выбор стиля A–E</title>
+    <style>
+      :root {
+        font-family: system-ui, sans-serif;
+        background: #f6f1ea;
+        color: #1c1917;
+      }
+      body {
+        margin: 0;
+        padding: 1rem;
+      }
+      h1 {
+        font-size: 1.25rem;
+        margin: 0 0 0.25rem;
+      }
+      p {
+        margin: 0 0 1rem;
+        color: #57534e;
+        font-size: 0.9rem;
+      }
+      .grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        max-width: 1100px;
+      }
+      figure {
+        margin: 0;
+        background: #fff;
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid #e7e5e4;
+      }
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3 / 4;
+        object-fit: cover;
+        background: #ddd;
+      }
+      figcaption {
+        padding: 0.75rem 1rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+      .sub {
+        display: block;
+        font-weight: 400;
+        font-size: 0.8rem;
+        color: #78716c;
+        margin-top: 0.15rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Агентёшка — стили A–E</h1>
+    <p>Выбери букву и напиши в чат. Картинки лежат локально — интернет не нужен.</p>
+    <div class="grid">
+      <figure>
+        <img src="./A.jpg" alt="A" />
+        <figcaption>A<span class="sub">Солнечный стол</span></figcaption>
+      </figure>
+      <figure>
+        <img src="./B.jpg" alt="B" />
+        <figcaption>B<span class="sub">Плюш / пастель</span></figcaption>
+      </figure>
+      <figure>
+        <img src="./C.jpg" alt="C" />
+        <figcaption>C<span class="sub">Лагерь-мастерская</span></figcaption>
+      </figure>
+      <figure>
+        <img src="./D.jpg" alt="D" />
+        <figcaption>D<span class="sub">Бумажный комикс</span></figcaption>
+      </figure>
+      <figure>
+        <img src="./E.jpg" alt="E" />
+        <figcaption>E<span class="sub">Ярмарка</span></figcaption>
+      </figure>
+    </div>
+  </body>
+</html>

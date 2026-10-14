@@ -3,7 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  // Локальный тест без OSPanel Postgres: file:./dev.db (см. .env.example)
+  // Прод / OSPanel позже: provider postgresql + migrate deploy
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -26,9 +28,80 @@ model Agent {
   cultureTrack   String       @default("neutral")
   coins          Int          @default(0)
   scenarioDayKey String       @default("monday")
+  /// Сырые оси персонализации 0..1 (дисперсия); потолки — trainingGrade
+  personalityJson Json?
+  loginStreak              Int      @default(0)
+  lastLoginDateKey         String?
+  lastLoginClaimDateKey    String?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   dailyStates    DailyState[]
+  loginClaims    DailyLoginClaim[]
+  purchases      AgentPurchase[]
+  replies        AgentReply[]
+  productionRuns ProductionRun[]
+}
+
+model ProductionRun {
+  id               String   @id @default(cuid())
+  agentId          String
+  agent            Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  dateKey          String
+  eventId          String
+  weekday          String
+  templateId       String
+  title            String
+  tagline          String
+  baseCoinsPerHour Int
+  baseBufferCap    Int
+  bonusCoinsPerHour Int     @default(0)
+  unclaimed        Int      @default(0)
+  lastTickAt       DateTime @default(now())
+  createdAt        DateTime @default(now())
+
+  @@unique([agentId, dateKey, eventId])
+  @@index([agentId])
+}
+
+model AgentReply {
+  id         String   @id @default(cuid())
+  agentId    String
+  agent      Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  dateKey    String
+  slotId     String
+  text       String
+  source     String
+  regensUsed Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([agentId, dateKey, slotId])
+  @@index([agentId, dateKey])
+}
+
+model DailyLoginClaim {
+  id             String   @id @default(cuid())
+  agentId        String
+  agent          Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  dateKey        String
+  streakDay      Int
+  coinsGranted   Int
+  hardwareDrop   String?
+  createdAt      DateTime @default(now())
+
+  @@unique([agentId, dateKey])
+  @@index([agentId])
+}
+
+model AgentPurchase {
+  id          String   @id @default(cuid())
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  itemId      String
+  purchasedAt DateTime @default(now())
+
+  @@unique([agentId, itemId])
+  @@index([agentId])
 }
 
 /// Одно действие сценария за календарный день (урок, сбор и т.д.)

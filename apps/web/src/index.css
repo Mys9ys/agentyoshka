@@ -1,5 +1,48 @@
 @import 'tailwindcss';
 
+/*
+  Арт-дирекшн «Солнечный стол» (вариант A).
+  Запасной тон — лагерь-мастерская (C): те же токены, чуть больше персика на кнопках.
+  Display: Comfortaa (кириллица, круглая). UI: Nunito. Не Inter / Roboto.
+*/
+
+@theme {
+  --font-display: 'Comfortaa', 'Nunito', 'Segoe UI', sans-serif;
+  --font-sans: 'Nunito', 'Segoe UI', sans-serif;
+
+  --color-cream: #fff6ea;
+  --color-cream-deep: #ffe4c2;
+  --color-paper: #fffdf8;
+  --color-ink: #3c2918;
+  --color-ink-soft: #8a6244;
+  --color-line: #f0d4b0;
+  --color-peach: #f08a3c;
+  --color-peach-deep: #d86d24;
+  --color-honey: #e8a317;
+  --color-honey-soft: #fff1cc;
+  --color-leaf: #2f9d62;
+  --color-leaf-soft: #e7f6ee;
+  --color-teal: #2a9d8f;
+  --color-danger: #c8453c;
+  --color-danger-soft: #fde8e6;
+
+  --shadow-soft: 0 4px 14px rgb(122 74 28 / 0.1);
+  --shadow-card: 0 10px 28px rgb(122 74 28 / 0.12);
+  --radius-card: 1.35rem;
+}
+
+:root {
+  --ay-bg: var(--color-cream);
+  --ay-surface: var(--color-paper);
+  --ay-ink: var(--color-ink);
+  --ay-ink-soft: var(--color-ink-soft);
+  --ay-accent: var(--color-peach);
+  --ay-success: var(--color-leaf);
+  --ay-coin: var(--color-honey);
+  --ay-radius: var(--radius-card);
+  --ay-shadow: var(--shadow-card);
+}
+
 html,
 body,
 #root {
@@ -8,8 +51,85 @@ body,
 }
 
 body {
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
-  background: #0f172a;
-  color: #f8fafc;
+  font-family: var(--font-sans);
+  background: var(--color-cream-deep);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
+}
+
+@keyframes ay-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes ay-pop {
+  0% {
+    transform: translateY(10px) scale(0.96) rotate(-2deg);
+  }
+  55% {
+    transform: translateY(-12px) scale(1.04) rotate(5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes ay-nom {
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  35% {
+    transform: rotate(-4deg) translateY(3px);
+  }
+  70% {
+    transform: rotate(4deg) translateY(-2px);
+  }
+}
+
+@keyframes ay-spin {
+  0% {
+    transform: rotate(-10deg) scale(0.97);
+  }
+  50% {
+    transform: rotate(10deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+.ay-sit {
+  animation: ay-bob 2.4s ease-in-out infinite;
+}
+
+.ay-pop {
+  animation: ay-pop 0.7s ease-out both;
+}
+
+.ay-nom {
+  animation: ay-nom 0.42s ease-in-out 3;
+}
+
+.ay-spin {
+  animation: ay-spin 0.85s ease-in-out both;
+}
+
+.ay-bob {
+  animation: ay-bob 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ay-sit,
+  .ay-pop,
+  .ay-nom,
+  .ay-spin,
+  .ay-bob {
+    animation: none;
+  }
 }

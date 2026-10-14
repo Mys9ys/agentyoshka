@@ -1,0 +1,34 @@
+# «Сервер» тамагочки — от железа зависит, что агент может «запилить»
+base:
+  ramGb: 4
+  gpuTier: 0
+  ssdGb: 128
+  hddGb: 256
+  gpuLabels: ["Встроенная", "Базовая", "Игровая", "Станция"]
+
+components:
+  ram:
+    label: "RAM"
+    unit: "ГБ"
+    icon: "🧠"
+  gpu:
+    label: "GPU"
+    unit: "ур."
+    icon: "🎮"
+  ssd:
+    label: "SSD"
+    unit: "ГБ"
+    icon: "💾"
+  hdd:
+    label: "HDD"
+    unit: "ГБ"
+    icon: "📀"
+
+# Как покупки в шопе докручивают машину (суммируется с base)
+shopBoosts:
+  hw_ram_4: { ramGb: 4 }
+  hw_ram_16: { ramGb: 12 }
+  hw_ssd_256: { ssdGb: 128 }
+  hw_gpu_basic: { gpuTier: 1 }
+  hw_npu: { gpuTier: 1, ramGb: 4 }
+  hw_cooling: { gpuTier: 0 }

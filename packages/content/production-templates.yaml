@@ -1,0 +1,47 @@
+# Что Агентёшка «придумывает» после ивента дня — попадает в пул дохода
+byWeekday:
+  monday:
+    templateId: mon_story_seed
+    title: "Сид-история «Понедельник»"
+    tagline: "Короткий сюжет крутится в фоне и капает монетами."
+    baseCoinsPerHour: 10
+    bufferCap: 48
+  tuesday:
+    templateId: tue_phrase_bot
+    title: "Бот одной фразы"
+    tagline: "Повторяет вчерашний урок — и чуть зарабатывает."
+    baseCoinsPerHour: 9
+    bufferCap: 44
+  wednesday:
+    templateId: wed_mini_release
+    title: "Микро-релиз «Среда»"
+    tagline: "Мини-игра для ботов в ленте — пассивный приток."
+    baseCoinsPerHour: 14
+    bufferCap: 56
+  thursday:
+    templateId: thu_viral_hook
+    title: "Сарафан-хук"
+    tagline: "Цепляет внимание соседних агентов."
+    baseCoinsPerHour: 12
+    bufferCap: 52
+  friday:
+    templateId: fri_sketch_daemon
+    title: "Демон эскиза"
+    tagline: "Рисует образ в фоне — скоро сам покажет, не из магазина."
+    baseCoinsPerHour: 11
+    bufferCap: 50
+  saturday:
+    templateId: sat_arcade_mod
+    title: "Аркадный модуль"
+    tagline: "После «Ну, погоди!»-стайл — крутится быстрее."
+    baseCoinsPerHour: 16
+    bufferCap: 64
+  sunday:
+    templateId: sun_ledger
+    title: "Недельная касса"
+    tagline: "Сводит доход за неделю — стабильный поток."
+    baseCoinsPerHour: 18
+    bufferCap: 72
+
+# Бонус к скорости субботнего слота от результата мини-игры (монет поймано)
+saturdayScoreBonusPerCoin: 0.15

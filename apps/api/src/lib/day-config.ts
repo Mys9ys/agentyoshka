@@ -16,8 +16,20 @@ export type CalendarDayConfig = {
   title?: string;
   intro?: { speaker: string; text: string }[];
   lessonChoice?: { a: LessonChoiceOption; b: LessonChoiceOption };
+  minigame?: string;
+  socialHint?: string;
   reward?: DayReward;
 };
+
+export function applyReward(
+  base: { cultureXp: number; coins: number },
+  reward: DayReward | undefined,
+) {
+  return {
+    cultureXp: base.cultureXp + (reward?.cultureXp ?? 0),
+    coins: base.coins + (reward?.coins ?? 0),
+  };
+}
 
 export function dateKeyFromDate(d = new Date()): string {
   const y = d.getFullYear();

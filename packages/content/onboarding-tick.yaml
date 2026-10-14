@@ -1,0 +1,65 @@
+# «Тик» — старт игры: первые дни с повышенной плодовитостью (удержание ~неделя)
+tick:
+  label: "Старт игры"
+  durationDays: 7
+  # Множитель пассивного дохода по дню жизни агента (0 = день создания)
+  productionMultByLifeDay: [2.2, 2.0, 1.75, 1.55, 1.35, 1.2, 1.1]
+  tagline: "Агентёшка в первые дни штампует идеи быстрее — заходи каждый день."
+
+# Награды за ежедневный вход (стрик; после 7-го дня цикл с day 1)
+loginStreak:
+  cycleAfterDay: 7
+  rewards:
+    - day: 1
+      coins: 20
+      label: "День 1"
+      hardwareDrop: hw_ram_4
+    - day: 2
+      coins: 25
+      label: "День 2"
+    - day: 3
+      coins: 30
+      label: "День 3"
+      hardwareDrop: hw_cooling
+    - day: 4
+      coins: 35
+      label: "День 4"
+    - day: 5
+      coins: 40
+      label: "День 5"
+      hardwareDrop: hw_ssd_256
+    - day: 6
+      coins: 45
+      label: "День 6"
+    - day: 7
+      coins: 60
+      label: "День 7"
+      hardwareDrop: hw_gpu_basic
+
+# Заглушки монетизации (без реальных платежей в MVP)
+monetizationPlanned:
+  iapCoinPacks:
+    - id: coins_small
+      label: "Мешочек монет"
+      note: "Позже — оплата в сторе"
+    - id: coins_medium
+      label: "Кошель агента"
+  rewardedAds:
+    - id: ad_double_collect
+      label: "Удвоить сбор с пула"
+      dailyCap: 3
+    - id: ad_speedup_craft
+      label: "Ускорить производство на 2 ч"
+      dailyCap: 5
+  productionSpeedup:
+    coinCostPerHour: 8
+    maxHoursPerPurchase: 4
+    dailyCapHours: 12
+    note: "Ускорение пула за монеты"
+
+# Свободная аркада (не календарный слот) — лимит в день
+freeArcade:
+  maxPlaysPerDay: 5
+  baseCoins: 5
+  coinsPerScorePoint: 1
+  maxCoinsReward: 20

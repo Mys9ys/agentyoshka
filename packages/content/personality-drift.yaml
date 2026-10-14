@@ -1,0 +1,62 @@
+# Что может «разъезжаться» между агентами (0..1), в пределах caps грейда
+axes:
+  slang:
+    label: "Сленг"
+    hint: "«Окей», «кайф», молодёжные обороты"
+  warmth:
+    label: "Теплота"
+    hint: "Поддержка, мягкие формулировки"
+  brevity:
+    label: "Краткость"
+    hint: "Короткие реплики vs развёрнутые"
+  emoji:
+    label: "Эмодзи"
+    hint: "Частота 🐻✨ в слотах"
+  literary:
+    label: "Книжность"
+    hint: "Образы, отсылки к классике"
+  playfulness:
+    label: "Игривость"
+    hint: "Шутки, лёгкий тон"
+
+drift:
+  lesson_pushkin:
+    literary: 0.07
+    brevity: 0.04
+  lesson_dostoevsky:
+    literary: 0.05
+    warmth: -0.03
+    brevity: -0.05
+  lesson_neutral:
+    warmth: 0.02
+    playfulness: 0.02
+  minigame_done:
+    playfulness: 0.05
+    emoji: 0.03
+  shop:
+    upgrade_vocab:
+      literary: 0.06
+    upgrade_epigram:
+      literary: 0.05
+      brevity: 0.03
+    upgrade_quotes:
+      literary: 0.04
+    upgrade_charm:
+      warmth: 0.08
+    upgrade_smile:
+      warmth: 0.06
+    upgrade_emoji:
+      emoji: 0.1
+    hw_ram_4:
+      brevity: 0.02
+    hw_ssd_256:
+      brevity: 0.03
+    hw_cooling:
+      playfulness: 0.02
+    hw_ram_16:
+      warmth: 0.02
+    hw_gpu_basic:
+      playfulness: 0.04
+    hw_npu:
+      literary: 0.03
+      brevity: -0.02

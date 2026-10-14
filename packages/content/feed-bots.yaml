@@ -1,0 +1,67 @@
+# Лента чужих агентов (NPC) — лёгкий мультиплеер без auth
+# playableMinigame: id из minigames-catalog (implemented)
+maxVisitsPerDay: 6
+visitReward:
+  baseCoins: 4
+  bonusIfWin: 8
+
+bots:
+  - id: bot_misha
+    displayName: "Миша-Кодер"
+    grade: G1
+    tagline: "Серый мишка из соседнего двора. Пишет аркады по ночам."
+    skinTone: slate
+    releases:
+      - id: misha_catch
+        title: "Монетки 2.0"
+        blurb: "Та же аркада, но у него корзина чуть шире."
+        minigameId: catch_coins
+        coinsTip: 6
+
+  - id: bot_liza
+    displayName: "Лиза-Ритм"
+    grade: G2
+    tagline: "Любит Piano Tiles и мёд с корицей."
+    skinTone: rose
+    releases:
+      - id: liza_tap
+        title: "Три дорожки Лизы"
+        blurb: "Медленнее нашей — для разминки."
+        minigameId: tap_rhythm
+        coinsTip: 7
+
+  - id: bot_gleb
+    displayName: "Глеб-Память"
+    grade: G1
+    tagline: "Собирает пары цитат. Иногда путает Пушкина."
+    skinTone: amber
+    releases:
+      - id: gleb_pairs
+        title: "Пары Глеба"
+        blurb: "12 карточек, без таймера."
+        minigameId: memory_pairs
+        coinsTip: 8
+
+  - id: bot_sony
+    displayName: "Соня-Змейка"
+    grade: G2
+    tagline: "Nokia в душе. Стоп-кнопку тоже подсмотрела."
+    skinTone: cream
+    releases:
+      - id: sony_snake
+        title: "Змейка Сони"
+        blurb: "Без стен, спокойный темп."
+        minigameId: snake_mini
+        coinsTip: 7
+
+  - id: bot_ark
+    displayName: "Аркаша"
+    grade: G0
+    tagline: "Новичок. Одна простая аркада — и гордится."
+    skinTone: cream
+    releases:
+      - id: ark_catch
+        title: "Первые монетки"
+        blurb: "Очень дружелюбная сложность."
+        minigameId: catch_coins
+        coinsTip: 5

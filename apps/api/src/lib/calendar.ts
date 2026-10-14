@@ -22,15 +22,20 @@ export function loadCalendar(): CalendarFile {
   return cached;
 }
 
+const WEEKDAYS: Weekday[] = [
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+];
+
 export function weekdayFromDate(d = new Date()): Weekday {
-  const map: Weekday[] = [
-    'sunday',
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-  ];
-  return map[d.getDay()]!;
+  const override = process.env.SCENARIO_WEEKDAY?.trim().toLowerCase();
+  if (override && WEEKDAYS.includes(override as Weekday)) {
+    return override as Weekday;
+  }
+  return WEEKDAYS[d.getDay()]!;
 }

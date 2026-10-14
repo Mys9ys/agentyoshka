@@ -13,7 +13,9 @@
     "dev:api": "npm run dev --workspace=@agentyoshka/api",
     "build": "npm run build --workspaces --if-present",
     "db:up": "docker compose up -d",
-    "db:down": "docker compose down"
+    "db:down": "docker compose down",
+    "db:migrate": "npm run db:deploy --workspace=@agentyoshka/api",
+    "db:check": "npm exec --workspace=@agentyoshka/api prisma migrate status"
   },
   "engines": {
     "node": ">=20"

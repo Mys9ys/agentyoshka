@@ -8,3 +8,4 @@ alwaysApply: true
 - Сценарий и календарь в `packages/content/` — не improvising open-world AI.
 - Стек: Vite React PWA + Fastify + Prisma + Postgres.
 - Имя продукта: Агентёшка; slug: agentyoshka.
+- Живой гайд игрока: `packages/content/how-to-play.yaml` (кнопка Help в UI). При новой механике — сразу дописать туда таб/пункт.

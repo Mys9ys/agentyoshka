@@ -1,0 +1,159 @@
+# Дерево технологий · культура/социал + железо (скины рисует сам агент, не магазин)
+branches:
+  - id: culture
+    label: "Культура и речь"
+    subtitle: "Словарь, XP, классика"
+    emoji: "📚"
+  - id: social
+    label: "Социальный модуль"
+    subtitle: "Харизма и small-talk"
+    emoji: "💬"
+  - id: hardware
+    label: "Железо"
+    subtitle: "RAM, диск, ускорители — больше дохода в пуле"
+    emoji: "🖥️"
+
+items:
+  # —— G0 · Культура (tier 1) ——
+  - id: upgrade_vocab
+    kind: upgrade
+    branch: culture
+    tier: 1
+    requires: []
+    label: "Чип словаря"
+    description: "Базовый словарный запас (+10 culture XP)."
+    price: 15
+    effect: { cultureXp: 10 }
+
+  - id: upgrade_epigram
+    kind: upgrade
+    branch: culture
+    tier: 1
+    requires: []
+    label: "Эpigramма"
+    description: "Короткие удачные фразы в репликах (+5 XP)."
+    price: 12
+    effect: { cultureXp: 5 }
+
+  - id: upgrade_quotes
+    kind: upgrade
+    branch: culture
+    tier: 1
+    requires: []
+    label: "Карман цитат"
+    description: "Щепотка классики в нужный момент (+5 XP)."
+    price: 10
+    effect: { cultureXp: 5 }
+
+  - id: upgrade_rhetoric
+    kind: upgrade
+    branch: culture
+    tier: 2
+    requires: [upgrade_vocab]
+    label: "Риторика II"
+    description: "Связные ответы и метафоры (+15 XP)."
+    price: 30
+    effect: { cultureXp: 15 }
+
+  # —— G0 · Социальное ——
+  - id: upgrade_charm
+    kind: upgrade
+    branch: social
+    tier: 1
+    requires: []
+    label: "Модуль харизмы"
+    description: "Увереннее в small-talk (+1 уровень)."
+    price: 25
+    effect: { level: 1 }
+
+  - id: upgrade_smile
+    kind: upgrade
+    branch: social
+    tier: 1
+    requires: []
+    label: "Приветливый тон"
+    description: "Мягче открывает диалог (+5 XP)."
+    price: 12
+    effect: { cultureXp: 5 }
+
+  - id: upgrade_emoji
+    kind: upgrade
+    branch: social
+    tier: 1
+    requires: []
+    label: "Эмодзи-разметка"
+    description: "Чуть живее текст без воды (+3 XP)."
+    price: 8
+    effect: { cultureXp: 3 }
+
+  - id: upgrade_network
+    kind: upgrade
+    branch: social
+    tier: 2
+    requires: [upgrade_charm]
+    label: "Сарафан-antenna"
+    description: "Лучше находит чужих агентов (скоро в ленте)."
+    price: 35
+    effect: { level: 1 }
+
+  # —— Железо · пул производства ——
+  - id: hw_ram_4
+    kind: upgrade
+    branch: hardware
+    tier: 1
+    requires: []
+    label: "Планка RAM 4 ГБ"
+    description: "+12 к буферу дохода (сколько копится до сбора)."
+    price: 18
+    effect: { bufferCapBonus: 12 }
+
+  - id: hw_ssd_256
+    kind: upgrade
+    branch: hardware
+    tier: 1
+    requires: []
+    label: "SSD 256 ГБ"
+    description: "+2 🪙/ч к каждому активному релизу в пуле."
+    price: 22
+    effect: { coinsPerHourBonus: 2 }
+
+  - id: hw_cooling
+    kind: upgrade
+    branch: hardware
+    tier: 1
+    requires: []
+    label: "Кулер «Тихий понедельник»"
+    description: "+8% скорости пассивного дохода."
+    price: 16
+    effect: { productionMult: 0.08 }
+
+  - id: hw_ram_16
+    kind: upgrade
+    branch: hardware
+    tier: 2
+    requires: [hw_ram_4]
+    label: "RAM 16 ГБ"
+    description: "+24 к буферу и +5% к скорости."
+    price: 40
+    effect: { bufferCapBonus: 24, productionMult: 0.05 }
+
+  - id: hw_gpu_basic
+    kind: upgrade
+    branch: hardware
+    tier: 2
+    requires: [hw_ssd_256]
+    label: "GPU для эскизов"
+    description: "+12% скорости (эскизы по пятницам быстрее капают)."
+    price: 45
+    effect: { productionMult: 0.12 }
+
+  - id: hw_npu
+    kind: upgrade
+    branch: hardware
+    tier: 3
+    requires: [hw_ram_16, hw_gpu_basic]
+    label: "NPU-ускоритель"
+    description: "+4 🪙/ч и +15% скорости ко всему пулу."
+    price: 70
+    effect: { coinsPerHourBonus: 4, productionMult: 0.15 }
+    minGrade: G1

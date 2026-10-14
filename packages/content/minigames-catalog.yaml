@@ -1,0 +1,165 @@
+# Пул мини-игр, которые «делает» Агентёшка (честно: в рекламе показываем то, что есть)
+# implemented: true — есть клиент; иначе «в разработке у мишки»
+games:
+  - id: catch_coins
+    title: "Поймай монетку"
+    tagline: "Аркада «Ну, погоди!»-стайл"
+    implemented: true
+    calendarSlot: saturday
+    requires: { ramGb: 4, gpuTier: 0, ssdGb: 64 }
+
+  - id: tap_rhythm
+    title: "Ритм-тапы"
+    tagline: "Как Piano Tiles: тапни, когда шарик в жёлтой зоне"
+    implemented: true
+    requires: { ramGb: 4, gpuTier: 0, ssdGb: 64 }
+
+  - id: merge_seeds
+    title: "Слияние семян"
+    tagline: "2048-lite для ботов"
+    implemented: false
+    requires: { ramGb: 6, gpuTier: 0, ssdGb: 128 }
+
+  - id: color_match
+    title: "Цветовые плитки"
+    tagline: "Match-3 на 6×6"
+    implemented: false
+    requires: { ramGb: 6, gpuTier: 0, ssdGb: 128 }
+
+  - id: stack_blocks
+    title: "Башня блоков"
+    tagline: "Стекинг с физикой-lite"
+    implemented: false
+    requires: { ramGb: 8, gpuTier: 0, ssdGb: 128 }
+
+  - id: snake_mini
+    title: "Змейка 2.0"
+    tagline: "Классика на портрет"
+    implemented: true
+    requires: { ramGb: 4, gpuTier: 0, ssdGb: 64 }
+
+  - id: flappy_bear
+    title: "Мишка-flap"
+    tagline: "Один тап — один прыжок"
+    implemented: false
+    requires: { ramGb: 6, gpuTier: 0, ssdGb: 128 }
+
+  - id: word_drip
+    title: "Капелька слов"
+    tagline: "Собери слово из букв"
+    implemented: false
+    requires: { ramGb: 8, gpuTier: 0, ssdGb: 128 }
+
+  - id: memory_pairs
+    title: "Пары карточек"
+    tagline: "Память на 12 карт"
+    implemented: true
+    requires: { ramGb: 4, gpuTier: 0, ssdGb: 64 }
+
+  - id: slider_puzzle
+    title: "Пятнашки"
+    tagline: "3×3 с артом мишки"
+    implemented: false
+    requires: { ramGb: 4, gpuTier: 0, ssdGb: 64 }
+
+  - id: pinball_mini
+    title: "Пinball-lite"
+    tagline: "Один экран, много отскоков"
+    implemented: false
+    requires: { ramGb: 12, gpuTier: 1, ssdGb: 256 }
+
+  - id: lane_runner
+    title: "Три полосы"
+    tagline: "Runner без обмана в рекламе"
+    implemented: false
+    requires: { ramGb: 10, gpuTier: 1, ssdGb: 256 }
+
+  - id: bubble_pop
+    title: "Пузырьки"
+    tagline: "Стрелялка по цветам"
+    implemented: false
+    requires: { ramGb: 8, gpuTier: 0, ssdGb: 128 }
+
+  - id: draw_line
+    title: "Нарисуй путь"
+    tagline: "Физика шарика"
+    implemented: false
+    requires: { ramGb: 10, gpuTier: 1, ssdGb: 256 }
+
+  - id: tap_cook
+    title: "Кухня тапов"
+    tagline: "Тайм-менеджмент на 1 стол"
+    implemented: false
+    requires: { ramGb: 8, gpuTier: 0, ssdGb: 128 }
+
+  - id: dice_yahtzee
+    title: "Кубики"
+    tagline: "Мини yahtzee"
+    implemented: false
+    requires: { ramGb: 4, gpuTier: 0, ssdGb: 64 }
+
+  - id: tower_defense_one
+    title: "Одна башня"
+    tagline: "TD на одной дорожке"
+    implemented: false
+    requires: { ramGb: 16, gpuTier: 1, ssdGb: 256 }
+
+  - id: whack_mole
+    title: "Лови молотком"
+    tagline: "Рефлексы 60 сек"
+    implemented: false
+    requires: { ramGb: 6, gpuTier: 0, ssdGb: 128 }
+
+  - id: spin_wheel
+    title: "Колесо удачи"
+    tagline: "Мета-игра без pay-to-win"
+    implemented: false
+    requires: { ramGb: 4, gpuTier: 0, ssdGb: 64 }
+
+  - id: quiz_classics
+    title: "Квиз классики"
+    tagline: "5 вопросов из culture XP"
+    implemented: false
+    requires: { ramGb: 6, gpuTier: 0, ssdGb: 128 }
+
+  - id: paint_fill
+    title: "Заливка"
+    tagline: "Flood-fill головоломка"
+    implemented: false
+    requires: { ramGb: 8, gpuTier: 0, ssdGb: 128 }
+
+  - id: connect_dots
+    title: "Точки и линии"
+    tagline: "Nonogram 5×5"
+    implemented: false
+    requires: { ramGb: 6, gpuTier: 0, ssdGb: 128 }
+
+  - id: space_invaders_mini
+    title: "Защита неба"
+    tagline: "Invaders на пол-экрана"
+    implemented: false
+    requires: { ramGb: 10, gpuTier: 1, ssdGb: 256 }
+
+  - id: break_bricks
+    title: "Арканоид"
+    tagline: "Одна жизнь, много монет"
+    implemented: false
+    requires: { ramGb: 8, gpuTier: 1, ssdGb: 128 }
+
+  - id: idle_clicker
+    title: "Кликер бота"
+    tagline: "Синергия с пулом дохода"
+    implemented: false
+    requires: { ramGb: 4, gpuTier: 0, ssdGb: 64 }
+
+  - id: pipe_rotate
+    title: "Трубы"
+    tagline: "Соедини поток"
+    implemented: false
+    requires: { ramGb: 8, gpuTier: 0, ssdGb: 128 }
+
+  - id: agent_suggestion
+    title: "Идея от мишки"
+    tagline: "Слот «предложи хозяину» — LLM позже"
+    implemented: false
+    requires: { ramGb: 16, gpuTier: 2, ssdGb: 512 }

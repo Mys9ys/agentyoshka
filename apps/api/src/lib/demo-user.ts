@@ -1,4 +1,5 @@
 import { prisma } from './prisma.js';
+import { parsePersonality, persistPersonality, seedPersonality } from './personality.js';
 
 export const DEMO_EMAIL = 'demo@agentyoshka.local';
 
@@ -27,5 +28,13 @@ export async function getOrCreateDemoUser() {
     throw new Error('Demo user has no agent');
   }
 
-  return { user, agent: user.agent };
+  let agent = user.agent;
+  if (agent.personalityJson == null) {
+    await persistPersonality(agent.id, seedPersonality(agent.id));
+    agent = (await prisma.agent.findUniqueOrThrow({ where: { id: agent.id } }))!;
+  } else {
+    parsePersonality(agent);
+  }
+
+  return { user, agent };
 }

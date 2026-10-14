@@ -14,14 +14,14 @@
 ```bash
 # из корня репозитория
 npm install
-# БД: OSPanel PostgreSQL-16 (127.0.1.43:5432) — см. apps/api/.env.example
-# либо Docker: npm run db:up → localhost:5433
-cd apps/api && copy .env.example .env && npx prisma migrate deploy
+# БД для теста: SQLite (файл apps/api/prisma/dev.db), без OSPanel Postgres
+cd apps/api && copy .env.example .env && npx prisma db push
+# Позже OSPanel PG: schema.prisma → postgresql, .env → DATABASE_URL postgres, npm run db:deploy:postgres
 npm run dev:api        # http://127.0.0.1:3001
-npm run dev:web        # http://127.0.0.1:5173 (прокси /api)
+npm run dev:web        # http://127.0.0.1:5180 (прокси /api; 5173 — другие проекты)
 
 **OSPanel:** после `npm run build` — сайт из `apps/web/dist`, прокси `/api` в `.osp/nginx/`.
-Открой домен проекта **agentyoshka** (или `http://127.0.0.1:5173` в dev). Перезапусти Nginx в OSPanel, если только что добавили `.osp`.
+Открой домен проекта **agentyoshka** (или `http://127.0.0.1:5180` в dev). Перезапусти Nginx в OSPanel, если только что добавили `.osp`.
 ```
 
 ## Cursor / workspace

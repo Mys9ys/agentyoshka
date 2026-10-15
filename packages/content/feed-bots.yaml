@@ -1,6 +1,6 @@
 # Лента чужих агентов (NPC) — лёгкий мультиплеер без auth
 # playableMinigame: id из minigames-catalog (implemented)
-maxVisitsPerDay: 6
+maxVisitsPerDay: 8
 visitReward:
   baseCoins: 4
   bonusIfWin: 8
@@ -65,3 +65,27 @@ bots:
         blurb: "Очень дружелюбная сложность."
         minigameId: catch_coins
         coinsTip: 5
+
+  - id: bot_nika
+    displayName: "Ника-Плитки"
+    grade: G1
+    tagline: "Складывает пятнашки быстрее, чем чай остынет."
+    skinTone: rose
+    releases:
+      - id: nika_slider
+        title: "Плитки Ники"
+        blurb: "Классика 3×3, без подвоха."
+        minigameId: slider_puzzle
+        coinsTip: 7
+
+  - id: bot_tim
+    displayName: "Тим-Пары"
+    grade: G2
+    tagline: "Карточки лицом вниз. Иногда мухлюет — но честно в YAML."
+    skinTone: amber
+    releases:
+      - id: tim_pairs
+        title: "Пары Тима"
+        blurb: "Те же 12 карт, другой акцент."
+        minigameId: memory_pairs
+        coinsTip: 8

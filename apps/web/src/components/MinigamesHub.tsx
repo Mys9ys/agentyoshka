@@ -4,6 +4,7 @@ import { apiFetch } from '../lib/api';
 import { CatchCoinsGame } from '../minigames/catch-coins/CatchCoinsGame';
 import { MemoryPairsGame } from '../minigames/memory-pairs/MemoryPairsGame';
 import { SnakeMiniGame } from '../minigames/snake-mini/SnakeMiniGame';
+import { SliderPuzzleGame } from '../minigames/slider-puzzle/SliderPuzzleGame';
 import { TapRhythmGame } from '../minigames/tap-rhythm/TapRhythmGame';
 
 type HubState = {
@@ -162,6 +163,12 @@ export function MinigamesHub({ onReward, embedded = false }: Props) {
         <MemoryPairsGame
           onClose={() => setActive(null)}
           onWin={(s) => void submit('memory_pairs', s)}
+        />
+      )}
+      {active === 'slider_puzzle' && (
+        <SliderPuzzleGame
+          onClose={() => setActive(null)}
+          onWin={(s) => void submit('slider_puzzle', s)}
         />
       )}
     </section>

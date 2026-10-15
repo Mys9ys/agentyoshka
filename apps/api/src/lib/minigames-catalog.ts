@@ -64,4 +64,5 @@ export const MINIGAME_MIN_SCORE: Record<string, number> = {
   tap_rhythm: 8,
   snake_mini: 8,
   memory_pairs: 6,
+  slider_puzzle: 6,
 };

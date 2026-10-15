@@ -4,6 +4,7 @@ import { apiFetch } from '../lib/api';
 import { CatchCoinsGame } from '../minigames/catch-coins/CatchCoinsGame';
 import { MemoryPairsGame } from '../minigames/memory-pairs/MemoryPairsGame';
 import { SnakeMiniGame } from '../minigames/snake-mini/SnakeMiniGame';
+import { SliderPuzzleGame } from '../minigames/slider-puzzle/SliderPuzzleGame';
 import { TapRhythmGame } from '../minigames/tap-rhythm/TapRhythmGame';
 
 type FeedRelease = {
@@ -200,6 +201,12 @@ export function FeedPanel({ onReward }: Props) {
       )}
       {active?.minigameId === 'memory_pairs' && (
         <MemoryPairsGame
+          onClose={() => setActive(null)}
+          onWin={(s) => void submit(active.releaseId, s)}
+        />
+      )}
+      {active?.minigameId === 'slider_puzzle' && (
+        <SliderPuzzleGame
           onClose={() => setActive(null)}
           onWin={(s) => void submit(active.releaseId, s)}
         />

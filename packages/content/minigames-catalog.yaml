@@ -59,7 +59,7 @@ games:
   - id: slider_puzzle
     title: "Пятнашки"
     tagline: "3×3 с артом мишки"
-    implemented: false
+    implemented: true
     requires: { ramGb: 4, gpuTier: 0, ssdGb: 64 }
 
   - id: pinball_mini

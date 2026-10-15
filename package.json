@@ -12,9 +12,11 @@
     "dev:web": "npm run dev --workspace=@agentyoshka/web",
     "dev:api": "npm run dev --workspace=@agentyoshka/api",
     "build": "npm run build --workspaces --if-present",
+    "build:web": "npm run build --workspace=@agentyoshka/web",
+    "build:api": "npm run build --workspace=@agentyoshka/api",
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
-    "db:migrate": "npm run db:deploy --workspace=@agentyoshka/api",
+    "db:migrate": "npm run db:deploy:postgres --workspace=@agentyoshka/api",
     "db:check": "npm exec --workspace=@agentyoshka/api prisma migrate status"
   },
   "engines": {

@@ -84,6 +84,7 @@ export function MinigamesHub({ onReward, embedded = false }: Props) {
   }
 
   const playable = hub?.games.filter((g) => g.unlocked) ?? [];
+  const locked = hub?.games.filter((g) => !g.unlocked) ?? [];
 
   return (
     <section className={embedded ? '' : 'rounded-card border border-line bg-paper p-4 shadow-card'}>
@@ -118,6 +119,27 @@ export function MinigamesHub({ onReward, embedded = false }: Props) {
           </li>
         ))}
       </ul>
+
+      {locked.length > 0 && (
+        <div className="mt-3">
+          <p className="mb-2 text-xs font-bold text-ink-soft">Закрыто железом — смотри Сервер</p>
+          <ul className="flex flex-col gap-2">
+            {locked.map((g) => (
+              <li
+                key={g.id}
+                className="rounded-2xl border border-line bg-paper px-3 py-3 opacity-75"
+              >
+                <span className="block text-base font-bold text-ink">{g.title}</span>
+                <span className="text-xs text-ink-soft">{g.tagline}</span>
+                <span className="mt-1 block text-xs font-semibold text-danger">
+                  RAM {g.requires.ramGb ?? 0} · GPU {g.requires.gpuTier ?? 0} · SSD{' '}
+                  {g.requires.ssdGb ?? 0}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {!hub && !error && <p className="text-sm text-ink-soft">Открываем аркаду…</p>}
 

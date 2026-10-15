@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { AgentProfile } from '@agentyoshka/shared';
 import { apiFetch, setSessionToken } from '../lib/api';
 import { btnPrimary, btnSecondary, Sheet } from '../design-system/ui';
@@ -12,6 +12,8 @@ type Props = {
   open: boolean;
   onClose: () => void;
   auth: AuthInfo;
+  /** Сразу открыть регистрацию (баннер «Сохрани прогресс»). */
+  startInRegister?: boolean;
   onAuthed: (opts: {
     agent: AgentProfile;
     coins: number;
@@ -19,14 +21,17 @@ type Props = {
   }) => void;
 };
 
-export function AuthPanel({ open, onClose, auth, onAuthed }: Props) {
-  const [mode, setMode] = useState<'menu' | 'login' | 'register'>(
-    auth.isGuest ? 'menu' : 'menu',
-  );
+export function AuthPanel({ open, onClose, auth, startInRegister, onAuthed }: Props) {
+  const [mode, setMode] = useState<'menu' | 'login' | 'register'>('menu');
   const [handle, setHandle] = useState(auth.handle ?? '');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (open && startInRegister) setMode('register');
+    if (!open) setMode('menu');
+  }, [open, startInRegister]);
 
   if (!open) return null;
 

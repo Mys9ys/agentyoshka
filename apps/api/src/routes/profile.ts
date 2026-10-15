@@ -10,6 +10,28 @@ import { buildTechTree } from '../lib/tech-tree.js';
 const STARTER_SKIN = 'bear_cream';
 
 export async function profileRoutes(app: FastifyInstance) {
+  app.post<{ Body: { displayName?: string } }>('/demo/agent/rename', async (req, reply) => {
+    const raw = req.body?.displayName?.trim() ?? '';
+    if (raw.length < 2 || raw.length > 24) {
+      return reply.status(400).send({ error: 'Имя: 2–24 символа' });
+    }
+    try {
+      const { agent } = await getRequestAgent(req);
+      const updated = await prisma.agent.update({
+        where: { id: agent.id },
+        data: { displayName: raw },
+      });
+      return {
+        ok: true,
+        agent: toAgentProfile(updated),
+        coins: updated.coins,
+      };
+    } catch (err) {
+      req.log.error(err);
+      return reply.status(503).send({ error: 'База недоступна' });
+    }
+  });
+
   app.get('/demo/profile', async (req, reply) => {
     try {
       const { agent } = await getRequestAgent(req);

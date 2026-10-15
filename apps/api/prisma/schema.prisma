@@ -3,9 +3,9 @@ generator client {
 }
 
 datasource db {
-  // Локальный тест без OSPanel Postgres: file:./dev.db (см. .env.example)
-  // Прод / OSPanel позже: provider postgresql + migrate deploy
-  provider = "sqlite"
+  // Docker: postgresql://agentyoshka:agentyoshka@127.0.0.1:5433/agentyoshka
+  // OSPanel: postgresql://postgres@127.0.1.43:5432/agentyoshka?schema=public
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

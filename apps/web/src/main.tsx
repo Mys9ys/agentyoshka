@@ -1,5 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { registerSW } from 'virtual:pwa-register'
+
+registerSW({ immediate: true })
 import '@fontsource/comfortaa/cyrillic-600.css'
 import '@fontsource/comfortaa/cyrillic-700.css'
 import '@fontsource/comfortaa/cyrillic-ext-600.css'

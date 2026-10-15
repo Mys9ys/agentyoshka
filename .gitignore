@@ -1,5 +1,6 @@
 node_modules
 dist
+.dev-dist
 .env
 .env.local
 .env.*.local
@@ -8,3 +9,4 @@ dist
 .DS_Store
 apps/api/prisma/*.db
 apps/api/prisma/*.db-journal
+dev-dist

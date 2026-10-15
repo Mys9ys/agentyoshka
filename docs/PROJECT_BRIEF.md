@@ -21,7 +21,7 @@ Tamagotchi-подобная **мобильная** игра: пользоват�
 ## Стек (выбран)
 
 - **Web:** Vite + React + TS + Tailwind, Phaser (`catch_coins`).
-- **API:** Fastify + Prisma + PostgreSQL (OSPanel PG-16 `127.0.1.43:5432` или Docker `5433`).
+- **API:** Fastify + Prisma + PostgreSQL (OSPanel PG-16 `127.0.1.43:5432` или Docker `5433`). SQLite снят.
 - **Monorepo:** `apps/web`, `apps/api`, `packages/content`, `packages/shared`.
 
 ## Название
@@ -60,8 +60,10 @@ Tamagotchi-подобная **мобильная** игра: пользоват�
 
 1. ~~2–3 мини-игры~~ — `tap_rhythm`, `snake_mini`, `memory_pairs` + хаб «Аркада мишки» (5 игр/день).
 2. Ускорение пула за монеты — `POST /demo/production/speedup` (готово).
-3. IAP / rewarded ads (заглушки в YAML).
-4. ~~Каталог чужих релизов~~ + ~~auth~~ (гость / ник+пароль, Bearer-сессия).
+3. ~~IAP / rewarded ads (заглушки)~~.
+4. ~~Каталог чужих релизов~~ + ~~auth~~ (гость / ник+пароль).
+5. ~~Онбординг гостя + PWA + Postgres~~.
+6. Дальше: реальные ads/IAP SDK, Capacitor, живые игроки.
 
 ## Голос агента
 

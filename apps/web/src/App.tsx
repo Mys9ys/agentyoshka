@@ -6,6 +6,11 @@ import type {
   LessonChoiceKey,
 } from '@agentyoshka/shared';
 import { apiFetch, apiUrl, ensureGuestSession } from './lib/api';
+import {
+  isFirstRunDone,
+  markMilestoneClaim,
+  shouldShowSaveNudge,
+} from './lib/onboarding';
 import { ART, ArtIcon, btnPrimary, btnSecondary, CoinPill, Sheet } from './design-system/ui';
 import { AgentAvatar, type BearPose } from './components/AgentAvatar';
 import { AuthPanel } from './components/AuthPanel';
@@ -15,7 +20,9 @@ import { FeedPanel } from './components/FeedPanel';
 import { HelpPanel } from './components/HelpPanel';
 import { MachinePanel } from './components/MachinePanel';
 import { MinigamesHub } from './components/MinigamesHub';
+import { OnboardingSheet } from './components/OnboardingSheet';
 import { ProductionPanel } from './components/ProductionPanel';
+import { SaveProgressBanner } from './components/SaveProgressBanner';
 import { ShopPanel } from './components/ShopPanel';
 import { CatchCoinsGame } from './minigames/catch-coins/CatchCoinsGame';
 import { MemoryPairsGame } from './minigames/memory-pairs/MemoryPairsGame';
@@ -61,15 +68,28 @@ export default function App() {
   const [machineOpen, setMachineOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState(false);
+  const [authStartRegister, setAuthStartRegister] = useState(false);
   const [authInfo, setAuthInfo] = useState<{ isGuest: boolean; handle: string | null }>({
     isGuest: true,
     handle: null,
   });
+  const [onboardingOpen, setOnboardingOpen] = useState(false);
+  const [saveNudgeVisible, setSaveNudgeVisible] = useState(false);
   const [screen, setScreen] = useState<'home' | 'pool' | 'arcade' | 'feed'>('home');
+
+  function refreshSaveNudge(isGuest = authInfo.isGuest) {
+    setSaveNudgeVisible(shouldShowSaveNudge(isGuest));
+  }
+
+  function noteGuestMilestone() {
+    markMilestoneClaim();
+    refreshSaveNudge(true);
+  }
 
   const loadData = useCallback(async () => {
     const session = await ensureGuestSession();
     setAuthInfo({ isGuest: session.isGuest, handle: session.handle });
+    setSaveNudgeVisible(shouldShowSaveNudge(session.isGuest));
     const [agentRes, calRes] = await Promise.all([
       apiFetch('/demo/agent'),
       apiFetch('/calendar/today'),
@@ -87,10 +107,11 @@ export default function App() {
     setScenarioWeekday(agentJson.scenarioWeekday ?? calJson.weekday);
     setToday(calJson);
     if (agentJson.source === 'fallback') {
-      setError('База офлайн — прогресс не сохранится. Проверь API и SQLite (apps/api/.env).');
+      setError('База офлайн — прогресс не сохранится. Проверь API и DATABASE_URL.');
     } else {
       setError(null);
     }
+    if (!isFirstRunDone()) setOnboardingOpen(true);
   }, []);
 
   useEffect(() => {
@@ -473,10 +494,22 @@ export default function App() {
                     </button>
                   ))}
 
+                {saveNudgeVisible && (
+                  <SaveProgressBanner
+                    visible
+                    onSave={() => {
+                      setAuthStartRegister(true);
+                      setAuthOpen(true);
+                    }}
+                    onDismiss={() => setSaveNudgeVisible(false)}
+                  />
+                )}
+
                 <DailyLoginCard
                   onClaimed={(c, a) => {
                     setCoins(c);
                     if (a) setAgent(a);
+                    if (authInfo.isGuest) noteGuestMilestone();
                     setProductionTick((n) => n + 1);
                   }}
                 />
@@ -514,6 +547,7 @@ export default function App() {
             onCoinsChange={(c, a) => {
               setCoins(c);
               if (a) setAgent(a);
+              if (authInfo.isGuest) noteGuestMilestone();
             }}
           />
         </Sheet>
@@ -531,6 +565,7 @@ export default function App() {
               setCoins(c);
               if (a) setAgent(a);
               if (msg) setToast(msg);
+              if (authInfo.isGuest) noteGuestMilestone();
             }}
           />
         </Sheet>
@@ -547,6 +582,7 @@ export default function App() {
               setCoins(c);
               if (a) setAgent(a);
               if (msg) setToast(msg);
+              if (authInfo.isGuest) noteGuestMilestone();
             }}
           />
         </Sheet>
@@ -565,14 +601,30 @@ export default function App() {
 
       <HelpPanel open={helpOpen} onClose={() => setHelpOpen(false)} />
 
+      <OnboardingSheet
+        open={onboardingOpen && !loading && Boolean(agent)}
+        skinId={agent?.baseSkinId ?? 'bear_cream'}
+        onDone={(a, c) => {
+          setOnboardingOpen(false);
+          if (a) setAgent(a);
+          if (typeof c === 'number') setCoins(c);
+        }}
+      />
+
       <AuthPanel
         open={authOpen}
-        onClose={() => setAuthOpen(false)}
+        onClose={() => {
+          setAuthOpen(false);
+          setAuthStartRegister(false);
+        }}
         auth={authInfo}
+        startInRegister={authStartRegister}
         onAuthed={({ agent: a, coins: c, auth }) => {
           setAgent(a);
           setCoins(c);
           setAuthInfo(auth);
+          setAuthStartRegister(false);
+          setSaveNudgeVisible(shouldShowSaveNudge(auth.isGuest));
           setProductionTick((n) => n + 1);
           void loadData();
         }}

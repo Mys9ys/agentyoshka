@@ -26,9 +26,9 @@ export function ArtIcon({
 
 export function CoinPill({ coins }: { coins: number }) {
   return (
-    <div className="flex items-center gap-1.5 rounded-full border border-line bg-paper py-1 pl-1 pr-3 shadow-soft">
-      <ArtIcon name="coin" className="h-8 w-8 object-contain" />
-      <span className="font-display text-base tabular-nums text-ink">{coins}</span>
+    <div className="flex h-9 items-center gap-1 rounded-full border border-line bg-paper py-0 pl-1 pr-2.5 shadow-soft">
+      <ArtIcon name="coin" className="h-6 w-6 object-contain" />
+      <span className="font-display text-sm tabular-nums leading-none text-ink">{coins}</span>
     </div>
   );
 }
@@ -73,9 +73,10 @@ export function Sheet({
   children: ReactNode;
   zClass?: string;
 }) {
+  // absolute — только колонка приложения (max-w-md), не весь экран монитора
   return (
-    <div className={`fixed inset-0 ${zClass} flex flex-col bg-cream text-ink`}>
-      <div className="mx-auto flex h-full w-full max-w-md flex-col px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))]">
+    <div className={`absolute inset-0 ${zClass} flex flex-col bg-cream text-ink`}>
+      <div className="flex h-full w-full flex-col px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(0.75rem,env(safe-area-inset-top))]">
         <header className="mb-3 flex items-start justify-between gap-3">
           <div className="min-w-0">
             <h2 className="font-display text-[1.65rem] leading-tight text-ink">{title}</h2>

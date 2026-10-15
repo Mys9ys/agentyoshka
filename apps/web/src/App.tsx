@@ -139,6 +139,12 @@ export default function App() {
     };
   }, [loadData]);
 
+  useEffect(() => {
+    if (!toast) return;
+    const t = window.setTimeout(() => setToast(null), 4500);
+    return () => window.clearTimeout(t);
+  }, [toast]);
+
   const fetchAgentReply = useCallback(async (regenerate = false) => {
     setReplyLoading(true);
     try {
@@ -308,16 +314,32 @@ export default function App() {
   return (
     <div className="relative mx-auto min-h-[100dvh] max-w-md bg-cream text-ink">
       {(toast || error) && (
-        <div className="pointer-events-none fixed inset-x-0 top-[max(0.6rem,env(safe-area-inset-top))] z-[70] mx-auto w-full max-w-md px-4">
+        <div className="pointer-events-none absolute inset-x-0 top-[max(0.6rem,env(safe-area-inset-top))] z-[70] px-4">
           {error && (
-            <p className="pointer-events-auto mb-2 rounded-2xl bg-danger-soft p-3 text-sm font-semibold text-danger shadow-card">
-              {error}
-            </p>
+            <div className="pointer-events-auto mb-2 flex items-start gap-2 rounded-2xl bg-danger-soft p-3 text-sm font-semibold text-danger shadow-card">
+              <p className="min-w-0 flex-1">{error}</p>
+              <button
+                type="button"
+                aria-label="Закрыть"
+                onClick={() => setError(null)}
+                className="shrink-0 rounded-full px-2 py-0.5 text-base leading-none text-danger/80 active:scale-95"
+              >
+                ×
+              </button>
+            </div>
           )}
           {toast && (
-            <p className="pointer-events-auto rounded-2xl bg-leaf-soft p-3 text-sm font-semibold text-ink shadow-card">
-              {toast}
-            </p>
+            <div className="pointer-events-auto flex items-start gap-2 rounded-2xl bg-leaf-soft p-3 text-sm font-semibold text-ink shadow-card">
+              <p className="min-w-0 flex-1">{toast}</p>
+              <button
+                type="button"
+                aria-label="Закрыть"
+                onClick={() => setToast(null)}
+                className="shrink-0 rounded-full px-2 py-0.5 text-base leading-none text-ink-soft active:scale-95"
+              >
+                ×
+              </button>
+            </div>
           )}
         </div>
       )}
@@ -338,11 +360,11 @@ export default function App() {
               <h1 className="font-display text-[1.85rem] leading-none tracking-tight text-ink">
                 Агентёшка
               </h1>
-              <div className="flex items-center gap-2">
+              <div className="flex h-9 items-center gap-1.5">
                 <button
                   type="button"
                   onClick={() => setAuthOpen(true)}
-                  className="rounded-full border border-line bg-paper px-2.5 py-2 text-xs font-bold text-ink shadow-soft active:scale-[0.98]"
+                  className="flex h-9 max-w-[5.5rem] items-center justify-center truncate rounded-full border border-line bg-paper px-2.5 text-xs font-bold text-ink shadow-soft active:scale-[0.98]"
                   aria-label="Аккаунт"
                   title="Аккаунт"
                 >
@@ -351,7 +373,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setHelpOpen(true)}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-line bg-paper font-display text-lg font-bold leading-none text-ink shadow-soft active:scale-[0.98]"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line bg-paper font-display text-base font-bold leading-none text-ink shadow-soft active:scale-[0.98]"
                   aria-label="Как играть"
                   title="Как играть"
                 >
